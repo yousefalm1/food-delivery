@@ -6,19 +6,11 @@ import SectionHeader from './reuseable/SectionHeader';
 
 const CategoryContainer = ({ restaurantCategories, restaurants }) => {
   return (
-    <>
-      <SectionHeader mainText="Category" subText="See all" />;
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginTop: 5 }}
-      >
-        <CategoriesList
-          restaurantCategories={restaurantCategories}
-          restaurants={restaurants}
-        />
+    <View style={{ marginVertical: 10 }}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <CategoriesList restaurantCategories={restaurantCategories} />
       </ScrollView>
-    </>
+    </View>
   );
 };
 

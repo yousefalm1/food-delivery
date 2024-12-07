@@ -1,51 +1,35 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import categoryImages from '../../assets/data/categoryImage';
-import { TouchableOpacity } from 'react-native';
 
 const Category = ({ category, restaurants }) => {
-  const [isActive, setIsActive] = useState(false);
-
   return (
-    <TouchableOpacity
-      onPress={() => setIsActive(!isActive)}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-        // padding: 30,
-        paddingLeft: 2,
-
-        paddingRight: 15,
-        paddingVertical: 2,
-        backgroundColor: isActive ? '#FE5320' : '#fff',
-        borderRadius: 100,
-        marginTop: 10,
-      }}
-    >
+    <View style={styles.container}>
       <Image
-        // source={categoryImages[category.categoryName]}
-        // source={restaurants[0].menuItems[0].image}
-        style={{
-          width: 35,
-          height: 35,
-          objectFit: 'cover',
-          borderRadius: 100,
-        }}
+        source={categoryImages[category.categoryName]}
+        style={styles.image}
       />
-      <Text
-        style={{
-          color: isActive ? '#fff' : '#000',
-          fontSize: 13,
-          fontWeight: '400',
-        }}
-      >
-        {category.categoryName}
-      </Text>
-    </TouchableOpacity>
+      <Text style={styles.text}>{category.categoryName}</Text>
+    </View>
   );
 };
 
 export default Category;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginHorizontal: 6,
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 13,
+  },
+  text: {
+    color: '#b7b7b7',
+    fontWeight: '500',
+    fontSize: 12,
+    marginTop: 10,
+  },
+});

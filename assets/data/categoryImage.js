@@ -1,12 +1,12 @@
 const categoryImages = {
-  Italian: require('../image/Italian.png'),
-  Chinese: require('../image/Chinese Food Instant Noodles.png'),
-  Mexican: require('../image/Mexican Food Icon.png'),
-  Indian: require('../image/Tikka Masala Icon.png'),
-  Kuwaiti: require('../image/Biryani Icon.png'),
-  Morrocan: require('../image/Moroccan Food Tajine.png'),
-  Japanese: require('../image/Japanese Food Ramen.png'),
-  Korean: require('../image/Bibimbap Icon.png'),
+  Italian: require('../image/homeItaly.jpg'),
+  Chinese: require('../image/HomeChinese.jpg'),
+  Mexican: require('../image/HomeMexican.jpg'),
+  Indian: require('../image/HomeIndain.jpg'),
+  Kuwaiti: require('../image/HomeKuwaiti.jpg'),
+  Morrocan: require('../image/HomeMorrocon.jpg'),
+  Japanese: require('../image/HomeJapanse.jpeg'),
+  Korean: require('../image/HomeKorean.jpg'),
 };
 
 export default categoryImages;

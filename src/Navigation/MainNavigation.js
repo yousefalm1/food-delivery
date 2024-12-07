@@ -20,7 +20,7 @@ function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: '#161616',
           borderTopWidth: 0,
         },
         tabBarActiveTintColor: '#FE5320',
@@ -66,9 +66,17 @@ const MainNavigation = () => {
       <Stack.Screen name="TabNavigator" component={TabNavigator} />
       <Stack.Screen name={ROUTE.HOME.MENU} component={Menu} />
       <Stack.Screen
-        name="FoodDetails"
+        name={ROUTE.HOME.FOOD_DETAILS}
         component={FoodDetails}
-        options={{ presentation: 'modal' }}
+        options={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+          cardStyle: { backgroundColor: '#121212' },
+          gestureEnabled: true,
+          gestureDirection: 'vertical',
+          cardOverlayEnabled: true,
+          animationEnabled: true,
+        }}
       />
     </Stack.Navigator>
   );

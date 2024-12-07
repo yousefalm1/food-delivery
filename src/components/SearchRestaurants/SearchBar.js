@@ -8,16 +8,18 @@ const SearchBar = ({ setSearch }) => {
         placeholder="Search restaurants, cuisines, dishes"
         onChangeText={(text) => setSearch(text)}
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: '#222222',
           padding: 12,
           paddingLeft: 40,
           borderRadius: 20,
+          color: '#fff',
         }}
+        placeholderTextColor="#fff"
       />
       <SearchIcon
         size={22}
         strokeWidth={1.5}
-        color="#7A869A"
+        color="#fff"
         style={{ position: 'absolute', left: 10, top: 10 }}
       />
     </View>

@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   price: {
-    color: '#ff7f50',
+    color: '#ff5f1f',
     fontSize: 18,
     fontWeight: '500',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',

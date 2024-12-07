@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import restaurants from '../../assets/data/restaurant';
 import { SafeAreaFrameContext } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   ChevronLeft,
   MinusIcon,
@@ -21,7 +22,6 @@ import {
 } from 'lucide-react-native';
 import RestaurantCardBox from '../components/restaurants/restaurantCardBox';
 import MenuItems from '../components/restaurants/menuItems';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import AuthButton from '../components/auth/AuthButton';
 import { useCart } from '../context/CartContext';
@@ -37,7 +37,7 @@ const Menu = ({ route }) => {
   const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={{ backgroundColor: '#121212', flex: 1 }}>
+      <ScrollView style={{ backgroundColor: '#000', flex: 1 }}>
         <View>
           <Image
             source={{ uri: restaurant.image }}
@@ -61,7 +61,7 @@ const Menu = ({ route }) => {
           >
             <ChevronLeft size={20} color={'white'} />
           </TouchableOpacity>
-          <LinearGradient
+          <linearGradient
             colors={[
               'rgba(0,0,0,0)',
               'rgba(0,0,0,0.1)',
@@ -98,7 +98,7 @@ const Menu = ({ route }) => {
             }}
           >
             <View style={{ gap: 6 }}>
-              <Text style={{ color: 'gray' }}>
+              <Text style={{ color: '#5e5e5e', fontWeight: 400 }}>
                 {restaurant.deliveryTime} - {restaurant.category} - Restaurant
               </Text>
               <View
