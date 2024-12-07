@@ -3,13 +3,24 @@ import React from 'react';
 import FeaturedResHeader from './FeaturedResHeader';
 import FeaturedResList from './FeaturedResList';
 
-const FeaturedResContainer = ({ restaurants }) => {
+const FeaturedResContainer = ({ restaurants, navigation }) => {
+  const handleSeeAll = () => {
+    navigation.navigate('AllRestaurants');
+  };
+
   return (
-    <View style={{ marginVertical: 20, gap: 2 }}>
-      <FeaturedResHeader />
-      <FeaturedResList restaurants={restaurants} />
+    <View style={styles.container}>
+      <FeaturedResHeader onSeeAll={handleSeeAll} />
+      <FeaturedResList restaurants={restaurants} navigation={navigation} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    marginBottom: 20,
+  },
+});
 
 export default FeaturedResContainer;

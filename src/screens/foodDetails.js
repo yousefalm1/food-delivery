@@ -23,9 +23,16 @@ import {
   StarIcon,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import { useCart } from '../context/CartContext';
 
-const FoodDetails = () => {
+const FoodDetails = ({ route }) => {
+  const navigation = useNavigation();
+  const { item, restaurant } = route.params;
+  const { addToCart } = useCart();
+
   const [quantity, setQuantity] = useState(1);
+  const totalPrice = item.price * quantity;
 
   const handleQuantity = (type) => {
     if (type === 'minus' && quantity > 1) {
@@ -35,14 +42,20 @@ const FoodDetails = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    addToCart(item, quantity, totalPrice);
+    navigation.goBack();
+  };
+
   return (
     <View style={{ backgroundColor: '#000', flex: 1 }}>
       <View>
         <Image
-          source={{ uri: restaurants[0].menuItems[0].image }}
+          source={{ uri: item.image }}
           style={{ width: '100%', height: 500 }}
         />
         <TouchableOpacity
+          onPress={() => navigation.goBack()}
           style={{
             position: 'absolute',
             top: 50,
@@ -88,7 +101,7 @@ const FoodDetails = () => {
         >
           <View>
             <Text style={{ fontSize: 22, fontWeight: '600', color: '#fff' }}>
-              {restaurants[0].menuItems[0].name}
+              {item.name}
             </Text>
           </View>
 
@@ -143,7 +156,7 @@ const FoodDetails = () => {
                 fontWeight: 400,
               }}
             >
-              {restaurants[0].rating}
+              {restaurant.rating}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', gap: 10 }}>
@@ -156,7 +169,7 @@ const FoodDetails = () => {
                 fontWeight: 400,
               }}
             >
-              {restaurants[0].deliveryTime}
+              {restaurant.deliveryTime}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', gap: 10 }}>
@@ -176,7 +189,7 @@ const FoodDetails = () => {
 
         <View style={{ marginTop: 30 }}>
           <Text style={{ fontSize: 16, color: '#5e5e5e', fontWeight: 300 }}>
-            {restaurants[0].menuItems[0].description}
+            {item.description}
           </Text>
         </View>
       </View>
@@ -211,11 +224,12 @@ const FoodDetails = () => {
               marginTop: 5,
             }}
           >
-            KD {restaurants[0].menuItems[0].price}
+            KD {totalPrice}
           </Text>
         </View>
 
         <TouchableOpacity
+          onPress={handleAddToCart}
           style={{
             backgroundColor: '#ff5f1f',
             width: 200,

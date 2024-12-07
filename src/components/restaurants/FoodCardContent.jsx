@@ -7,12 +7,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Navigation } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
+import ROUTE from '../../Navigation';
 
-const RestaurantCardContent = ({ restaurant }) => {
+const FoodCardContent = ({ item, restaurant }) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() =>
+        navigation.navigate(ROUTE.HOME.FOOD_DETAILS, { item, restaurant })
+      }
+    >
       <ImageBackground
-        source={{ uri: restaurant.menuItems[0].image }}
+        source={{ uri: item.image }}
         resizeMode="cover"
         style={styles.image}
       >
@@ -21,10 +30,8 @@ const RestaurantCardContent = ({ restaurant }) => {
           style={styles.gradient}
         >
           <View style={styles.textContainer}>
-            <Text style={styles.name}>{restaurant.menuItems[0].name}</Text>
-            <Text style={styles.price}>
-              KD {restaurant.menuItems[0].price.toFixed(2)}
-            </Text>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.price}>KD {item.price.toFixed(2)}</Text>
           </View>
         </LinearGradient>
       </ImageBackground>
@@ -32,7 +39,7 @@ const RestaurantCardContent = ({ restaurant }) => {
   );
 };
 
-export default RestaurantCardContent;
+export default FoodCardContent;
 
 const styles = StyleSheet.create({
   card: {

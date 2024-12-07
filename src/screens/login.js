@@ -10,13 +10,19 @@ import {
 import { ChevronLeft } from 'lucide-react-native';
 import LongInput from '../components/auth/longInput';
 import AuthButton from '../components/auth/AuthButton';
+import { useNavigation } from '@react-navigation/native';
+import ROUTE from '../Navigation';
 
 const Login = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton}>
+      {/* <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
         <ChevronLeft size={28} color="#ff5f1f" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.contentContainer}>
         <View style={styles.headerContainer}>
@@ -35,10 +41,13 @@ const Login = () => {
         <View style={styles.footerContainer}>
           <Text style={styles.registerText}>
             Don't have an account?
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTE.AUTH.REGISTER)}
+            >
               <Text style={styles.registerLink}>Register</Text>
             </TouchableOpacity>
           </Text>
+
           <AuthButton text="Sign in" />
         </View>
       </View>
@@ -50,6 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#121212',
   },
   backButton: {
     marginBottom: 20,

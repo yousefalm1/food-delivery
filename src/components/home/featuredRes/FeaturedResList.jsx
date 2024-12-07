@@ -4,7 +4,17 @@ import FeaturedResCard from './FeaturedResCard';
 
 const FeaturedResList = ({ restaurants }) => {
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={{ marginHorizontal: -20 }}
+      contentContainerStyle={{
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        gap: 10,
+        paddingHorizontal: 15,
+      }}
+    >
       {restaurants.map((restaurant, index) => (
         <FeaturedResCard restaurant={restaurant} key={index} />
       ))}

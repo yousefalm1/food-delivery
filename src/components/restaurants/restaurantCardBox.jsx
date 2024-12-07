@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
-import RestaurantCardContent from './restaurantCardContent';
+import FoodCardContent from './FoodCardContent';
 
-const RestaurantCardBox = ({ restaurant }) => {
+const RestaurantCardBox = ({ item, restaurant }) => {
   return (
     <View
       style={{
@@ -11,7 +11,7 @@ const RestaurantCardBox = ({ restaurant }) => {
         flexDirection: 'row',
       }}
     >
-      <RestaurantCardContent restaurant={restaurant} />
+      <FoodCardContent item={item} restaurant={restaurant} />
     </View>
   );
 };

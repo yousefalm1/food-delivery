@@ -2,11 +2,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import RestaurantCardBox from './restaurantCardBox';
 
-const MenuItems = ({ restaurants }) => {
+const MenuItems = ({ menuItems, restaurant }) => {
   return (
     <>
-      {restaurants.map((restaurant) => (
-        <RestaurantCardBox restaurant={restaurant} key={restaurant.id} />
+      {menuItems.map((item) => (
+        <RestaurantCardBox item={item} key={item.id} restaurant={restaurant} />
       ))}
     </>
   );

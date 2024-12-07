@@ -2,26 +2,24 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import React from 'react';
 import CategoriesList from './categoriesList';
+import SectionHeader from './reuseable/SectionHeader';
 
-const CategoryContainer = ({ restaurantCategories }) => {
+const CategoryContainer = ({ restaurantCategories, restaurants }) => {
   return (
-    <View style={{ marginTop: 5 }}>
+    <>
+      <SectionHeader mainText="Category" subText="See all" />;
       <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        contentContainerStyle={{
-          flexDirection: 'row',
-          gap: 10,
-          marginTop: 10,
-          alignItems: 'center',
-        }}
+        style={{ marginTop: 5 }}
       >
-        <CategoriesList restaurantCategories={restaurantCategories} />
+        <CategoriesList
+          restaurantCategories={restaurantCategories}
+          restaurants={restaurants}
+        />
       </ScrollView>
-    </View>
+    </>
   );
 };
 
 export default CategoryContainer;
-
-const styles = StyleSheet.create({});

@@ -6,35 +6,50 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeft, Minus, Plus, Trash2 } from 'lucide-react-native';
 import restaurants from '../../assets/data/restaurant';
 import AuthButton from '../components/auth/AuthButton';
+import { useNavigation } from '@react-navigation/native';
+import { useCart } from '../context/CartContext';
 
 const Cart = () => {
-  const [quantity, setQuantity] = useState(1);
-  // const [subtotal, setSubtotal] = useState(10);
-  // const [fee, setFee] = useState(0);
-
-  // const calculateFee = (subtotal) => {
-  //   setFee(subtotal * 0.3);
-  // };
-
-  const handleQuantity = (type) => {
-    if (type === 'minus' && quantity > 1) {
-      setQuantity(quantity - 1);
-    } else if (type === 'plus') {
-      setQuantity(quantity + 1);
-    }
-  };
+  const navigation = useNavigation();
+  const { cart } = useCart();
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const fee = (subtotal * 0.05).toFixed(2);
+  const total = subtotal + fee;
 
   return (
     <View style={{ padding: 20, flex: 1, backgroundColor: '#121212' }}>
       <View
-        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 40 }}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 40,
+          marginTop: 40,
+        }}
       >
-        <TouchableOpacity style={{ position: 'absolute', left: 0 }}>
-          <ChevronLeft size={28} color="#ff5f1f" />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            padding: 10,
+            borderRadius: 100,
+            backgroundColor: '#ff5f1f',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            zIndex: 10,
+          }}
+        >
+          <ChevronLeft size={20} color="white" />
         </TouchableOpacity>
         <View style={{ flex: 1, alignItems: 'center' }}>
           <Text style={{ color: '#fff', fontSize: 24, fontWeight: '600' }}>
@@ -44,220 +59,89 @@ const Cart = () => {
       </View>
 
       <ScrollView>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            borderRadius: 20,
-            padding: 15,
-            marginBottom: 15,
-            backgroundColor: '#121212',
-            shadowColor: '#000000',
-            shadowOffset: {
-              width: 0,
-              height: 25,
-            },
-            shadowOpacity: 1,
-            shadowRadius: 45,
-            elevation: 45,
-            borderWidth: 0.5,
-            borderColor: '#2A2A2A',
-          }}
-        >
-          <View style={{ flexDirection: 'row' }}>
-            <View>
-              <Image
-                source={{ uri: restaurants[0].menuItems[0].image }}
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 8,
-                  marginRight: 15,
-                }}
-              />
-            </View>
-
-            <View style={{ justifyContent: 'space-between' }}>
-              <Text style={{ color: '#fff', fontSize: 18, fontWeight: '400' }}>
-                {restaurants[0].menuItems[0].name}
-              </Text>
-              <Text style={{ color: '#aaa', fontSize: 14, fontWeight: '600' }}>
-                KD {restaurants[0].menuItems[0].price}
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-            <TouchableOpacity
-              style={{
-                padding: 5,
-                backgroundColor: '#ff5f1f',
-                borderRadius: 10,
-              }}
-              onPress={() => handleQuantity('minus')}
-            >
-              <Minus size={16} color="#fff" />
-            </TouchableOpacity>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>
-              {quantity}
-            </Text>
-            <TouchableOpacity
-              style={{
-                padding: 5,
-                backgroundColor: '#ff5f1f',
-                borderRadius: 10,
-              }}
-              onPress={() => handleQuantity('plus')}
-            >
-              <Plus size={16} color="#fff" />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            borderRadius: 20,
-            padding: 15,
-            marginBottom: 15,
-            backgroundColor: '#121212',
-            shadowColor: '#000000',
-            shadowOffset: {
-              width: 0,
-              height: 25,
-            },
-            shadowOpacity: 1,
-            shadowRadius: 45,
-            elevation: 45,
-            borderWidth: 0.5,
-            borderColor: '#2A2A2A',
-          }}
-        >
-          <View style={{ flexDirection: 'row' }}>
-            <View>
-              <Image
-                source={{ uri: restaurants[0].menuItems[0].image }}
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 8,
-                  marginRight: 15,
-                }}
-              />
-            </View>
-
-            <View style={{ justifyContent: 'space-between' }}>
-              <Text style={{ color: '#fff', fontSize: 18, fontWeight: '400' }}>
-                {restaurants[0].menuItems[0].name}
-              </Text>
-              <Text style={{ color: '#aaa', fontSize: 14, fontWeight: '600' }}>
-                KD {restaurants[0].menuItems[0].price}
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-            <TouchableOpacity
-              style={{
-                padding: 5,
-                backgroundColor: '',
-                borderRadius: 10,
-                borderColor: '#fff',
-                borderWidth: 0.5,
-              }}
-              onPress={() => handleQuantity('minus')}
-            >
-              <Minus size={16} color="#fff" />
-            </TouchableOpacity>
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>
-              {quantity}
-            </Text>
-            <TouchableOpacity
-              style={{
-                padding: 5,
-                backgroundColor: '',
-                borderRadius: 10,
-                borderColor: '#fff',
-                borderWidth: 0.5,
-              }}
-              onPress={() => handleQuantity('plus')}
-            >
-              <Plus size={16} color="#fff" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          backgroundColor: '#1E1E1E',
-          borderRadius: 20,
-          padding: 15,
-          marginBottom: 15,
-        }}
-      >
-        <Image
-          source={{ uri: restaurants[0].menuItems[0].image }}
-          style={{
-            width: 60,
-            height: 60,
-            borderRadius: 8,
-            marginRight: 15,
-          }}
-        />
-        <View style={{ flex: 1, justifyContent: 'space-between' }}>
-          <Text
-            style={{
-              color: '#fff',
-              fontSize: 18,
-              fontWeight: 'bold',
-              marginBottom: 5,
-            }}
-          >
-            {restaurants[0].menuItems[0].name}
-          </Text>
-
+        {cart.map((cartItem, index) => (
           <View
+            key={index}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
+              borderRadius: 20,
+              padding: 15,
+              marginBottom: 15,
+              backgroundColor: '#121212',
+              shadowColor: '#000000',
+              shadowOffset: {
+                width: 0,
+                height: 25,
+              },
+              shadowOpacity: 1,
+              shadowRadius: 45,
+              elevation: 45,
+              borderWidth: 0.5,
+              borderColor: '#2A2A2A',
             }}
           >
-            <Text style={{ color: '#aaa', fontSize: 16, fontWeight: 'bold' }}>
-              KD {restaurants[0].menuItems[0].price}
-            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <View>
+                <Image
+                  source={{ uri: cartItem.image }}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 8,
+                    marginRight: 15,
+                  }}
+                />
+              </View>
+
+              <View style={{ justifyContent: 'space-between' }}>
+                <Text
+                  style={{ color: '#fff', fontSize: 18, fontWeight: '400' }}
+                >
+                  {cartItem.name}
+                </Text>
+                <Text
+                  style={{ color: '#aaa', fontSize: 14, fontWeight: '600' }}
+                >
+                  KD {cartItem.price}
+                </Text>
+              </View>
+            </View>
+
             <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: '#ff5f1f',
-                paddingHorizontal: 10,
-                paddingVertical: 5,
-                borderRadius: 10,
-              }}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}
             >
-              <TouchableOpacity>
-                <Minus size={20} color="#fff" />
-              </TouchableOpacity>
-              <Text
+              <TouchableOpacity
                 style={{
-                  color: '#fff',
-                  marginHorizontal: 10,
-                  fontSize: 16,
-                  fontWeight: 'bold',
+                  padding: 5,
+                  backgroundColor: '',
+                  borderRadius: 10,
+                  borderColor: '#fff',
+                  borderWidth: 0.5,
                 }}
+                onPress={() => handleQuantity('minus', index)}
               >
-                1
+                <Minus size={16} color="#fff" />
+              </TouchableOpacity>
+              <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>
+                {cartItem.quantity}
               </Text>
-              <TouchableOpacity>
-                <Plus size={20} color="#fff" />
+              <TouchableOpacity
+                style={{
+                  padding: 5,
+                  backgroundColor: '',
+                  borderRadius: 10,
+                  borderColor: '#fff',
+                  borderWidth: 0.5,
+                }}
+                onPress={() => handleQuantity('plus', index)}
+              >
+                <Plus size={16} color="#fff" />
               </TouchableOpacity>
             </View>
           </View>
-        </View>
-      </View> */}
+        ))}
+      </ScrollView>
 
       <Text
         style={{
@@ -316,7 +200,7 @@ const Cart = () => {
                 textAlign: 'right',
               }}
             >
-              KD 12
+              KD {Number(subtotal).toFixed(2)}
             </Text>
           </View>
           <View
@@ -344,7 +228,7 @@ const Cart = () => {
                 textAlign: 'right',
               }}
             >
-              KD 2
+              KD {Number(fee).toFixed(2)}
             </Text>
           </View>
           <View
@@ -381,7 +265,7 @@ const Cart = () => {
                 textAlign: 'right',
               }}
             >
-              KD 14
+              KD {parseFloat(total).toFixed(2)}
             </Text>
           </View>
         </View>

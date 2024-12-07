@@ -3,12 +3,18 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ChevronLeft } from 'lucide-react-native';
 import LongInput from '../components/auth/longInput';
 import AuthButton from '../components/auth/AuthButton';
+import { useNavigation } from '@react-navigation/native';
+import ROUTE from '../Navigation';
 
-const SignUp = ({ navigation }) => {
+const SignUp = ({}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
           <ChevronLeft size={28} color="#ff5f1f" />
         </TouchableOpacity>
         <Text style={styles.title}>Join Us Today</Text>
@@ -27,7 +33,9 @@ const SignUp = ({ navigation }) => {
       <View style={styles.footerContainer}>
         <Text style={styles.registerText}>
           Already have an account?
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(ROUTE.AUTH.LOGIN)}
+          >
             <Text style={styles.registerLink}>Log in</Text>
           </TouchableOpacity>
         </Text>

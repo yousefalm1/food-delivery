@@ -22,17 +22,29 @@ import {
 import RestaurantCardBox from '../components/restaurants/restaurantCardBox';
 import MenuItems from '../components/restaurants/menuItems';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import AuthButton from '../components/auth/AuthButton';
+import { useCart } from '../context/CartContext';
+import ROUTE from '../Navigation/index';
 
-const Menu = () => {
+const Menu = ({ route }) => {
+  const navigation = useNavigation();
+
+  const { cart } = useCart();
+
+  const hasCartItems = cart.length > 0;
+  const { restaurant } = route.params;
+  const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
-    <>
-      <ScrollView>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ backgroundColor: '#121212', flex: 1 }}>
         <View>
           <Image
-            source={{ uri: restaurants[0].image }}
+            source={{ uri: restaurant.image }}
             style={{ width: '100%', height: 300 }}
           />
           <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={{
               position: 'absolute',
               top: 50,
@@ -44,6 +56,7 @@ const Menu = () => {
               shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.1,
               shadowRadius: 2,
+              zIndex: 10,
             }}
           >
             <ChevronLeft size={20} color={'white'} />
@@ -72,7 +85,7 @@ const Menu = () => {
         <View style={{ padding: 20 }}>
           <View>
             <Text style={{ fontWeight: '600', fontSize: 24, color: '#fff' }}>
-              {restaurants[0].name}
+              {restaurant.name}
             </Text>
           </View>
 
@@ -80,15 +93,13 @@ const Menu = () => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-
               alignItems: 'center',
               marginTop: 10,
             }}
           >
             <View style={{ gap: 6 }}>
               <Text style={{ color: 'gray' }}>
-                {restaurants[0].deliveryTime} - {restaurants[0].category} -
-                Restaurant
+                {restaurant.deliveryTime} - {restaurant.category} - Restaurant
               </Text>
               <View
                 style={{
@@ -99,7 +110,7 @@ const Menu = () => {
               >
                 <Star fill="green" stroke="green" width={18} height={18} />
                 <Text style={{ color: '#52ae60', marginLeft: 4 }}>
-                  {restaurants[0].rating} Excellent
+                  {restaurant.rating} Excellent
                 </Text>
               </View>
             </View>
@@ -119,13 +130,96 @@ const Menu = () => {
             </Text>
           </View>
 
-          <MenuItems restaurants={restaurants} />
+          <MenuItems menuItems={restaurant.menuItems} restaurant={restaurant} />
         </View>
       </ScrollView>
-    </>
+      {hasCartItems && (
+        <View
+          style={{
+            padding: 20,
+            backgroundColor: '#121212',
+            shadowColor: '#000000',
+            shadowOffset: {
+              width: 0,
+              height: 25,
+            },
+            shadowOpacity: 1,
+            shadowRadius: 45,
+            elevation: 45,
+          }}
+        >
+          <TouchableOpacity
+            style={[styles.signInButton, { marginBottom: 20 }]}
+            onPress={() => {
+              navigation.navigate('TabNavigator', {
+                screen: ROUTE.HOME.CART,
+              });
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                paddingHorizontal: 10,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.3)',
+                  borderRadius: 15,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 16,
+                    fontWeight: '700',
+                    letterSpacing: 1,
+                  }}
+                >
+                  {cart.length}
+                </Text>
+              </View>
+              <View style={{ marginHorizontal: 15 }}>
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontWeight: '600',
+                    fontSize: 17,
+                  }}
+                >
+                  View Basket
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontWeight: '800',
+                    fontSize: 18,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  KD {total}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
   );
 };
 
 export default Menu;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  signInButton: {
+    backgroundColor: '#ff5f1f',
+    padding: 15,
+    borderRadius: 20,
+  },
+});
