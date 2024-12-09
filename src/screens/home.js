@@ -6,9 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  // Text,
+  Text,
 } from 'react-native';
-import { Text } from '../../App';
 import restaurantCategories from '../../assets/data/restaurantCategories';
 import restaurants from '../../assets/data/restaurant';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,6 +18,7 @@ import SearchSection from '../components/home/header/searchSection';
 import SectionHeader from '../components/reuseable/SectionHeader';
 import betterImage from '../../assets/data/BetterImage';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getCategories, getRestaurants } from '../api/resturants';
 import {
   ArrowBigLeft,
   ArrowRight,
@@ -42,17 +42,29 @@ import FeaturedResHeader from '../components/home/featuredRes/FeaturedResHeader'
 import FeaturedResCard from '../components/home/featuredRes/FeaturedResCard';
 import { useNavigation } from '@react-navigation/native';
 import { useCart } from '../context/CartContext';
+import ROUTE from '../Navigation/index';
+import { useQuery } from '@tanstack/react-query';
 
 const Home = () => {
   const { cart } = useCart();
   const navigation = useNavigation();
+
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories,
+  });
+
+  const { data: restaurants } = useQuery({
+    queryKey: ['restaurants'],
+    queryFn: getRestaurants,
+  });
 
   return (
     <View
       style={{
         backgroundColor: '#161616',
         paddingHorizontal: 15,
-        marginTop: 50,
+        paddingTop: 50,
         flex: 1,
       }}
     >
@@ -66,44 +78,36 @@ const Home = () => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-          <MapPin size={22} color={'#ff5f1f'} strokeWidth={2} />
+          <MapPin size={22} color={'#FE5320'} strokeWidth={2} />
           <Text style={{ color: '#aaa', fontWeight: '400', fontSize: 15 }}>
             Coded
           </Text>
         </View>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate(ROUTE.HOME.CART)}
-          style={{
-            padding: 10,
-            borderRadius: 100,
-            backgroundColor: '#ff5f1f',
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.2,
-            shadowRadius: 3,
-          }}
+          onPress={() =>
+            navigation.navigate('TabNavigator', { screen: ROUTE.HOME.CART })
+          }
+          style={styles.buttonStyle}
         >
-          <ShoppingCart size={18} color="#fff" strokeWidth={2} />
+          <ShoppingCart size={20} color="#FE5320" />
           {cart.length > 0 && (
             <View
               style={{
                 position: 'absolute',
                 right: -6,
                 top: -6,
-                backgroundColor: '#fff',
+                backgroundColor: '#FE5320',
                 borderRadius: 12,
-                minWidth: 22,
-                height: 22,
+                minWidth: 18,
+                height: 18,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 2,
-                borderColor: '#ff5f1f',
+                borderWidth: 1.5,
+                borderColor: '#161616',
               }}
             >
-              <Text
-                style={{ color: '#ff5f1f', fontSize: 11, fontWeight: 'bold' }}
-              >
+              <Text style={{ color: '#fff', fontSize: 10, fontWeight: 'bold' }}>
                 {cart.length}
               </Text>
             </View>
@@ -128,7 +132,7 @@ const Home = () => {
               padding: 13,
               paddingTop: 20,
               height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.4)',
+              backgroundColor: 'rgba(0,0,0,0.5)',
             }}
           >
             <View
@@ -142,9 +146,9 @@ const Home = () => {
               <View>
                 <Text
                   style={{
-                    color: '#aaa',
+                    color: 'lightgray',
                     fontWeight: '600',
-                    fontSize: 12,
+                    fontSize: 13,
                     letterSpacing: 1,
                   }}
                 >
@@ -159,7 +163,7 @@ const Home = () => {
                     fontSize: 20,
                   }}
                 >
-                  <Flame size={20} color={'#ff5f1f'} fill={'#ff5f1f'} />
+                  <Flame size={24} color={'#FE5320'} fill={'#FE5320'} />
                 </Text>
               </View>
             </View>
@@ -181,29 +185,29 @@ const Home = () => {
               <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                 <Star
                   size={20}
-                  color={'#ff5f1f'}
-                  fill={'#ff5f1f'}
-                  strokeWidth={1}
+                  color={'#FE5320'}
+                  fill={'#FE5320'}
+                  strokeWidth={1.5}
                 />
                 <Star
                   size={20}
-                  color={'#ff5f1f'}
-                  fill={'#ff5f1f'}
-                  strokeWidth={1}
+                  color={'#FE5320'}
+                  fill={'#FE5320'}
+                  strokeWidth={1.5}
                 />
                 <Star
                   size={20}
-                  color={'#ff5f1f'}
-                  fill={'#ff5f1f'}
-                  strokeWidth={1}
+                  color={'#FE5320'}
+                  fill={'#FE5320'}
+                  strokeWidth={1.5}
                 />
                 <Star
                   size={20}
-                  color={'#ff5f1f'}
-                  fill={'#ff5f1f'}
-                  strokeWidth={1}
+                  color={'#FE5320'}
+                  fill={'#FE5320'}
+                  strokeWidth={1.5}
                 />
-                <Star size={20} color={'#808080'} strokeWidth={1} />
+                <Star size={20} color={'#aaa'} strokeWidth={1.5} />
               </View>
             </View>
           </View>
@@ -220,17 +224,6 @@ const Home = () => {
           borderRadius: 20,
         }}
       >
-        {/* <LinearGradient
-          colors={['#2a2a2a', '#1a1a1a']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            borderRadius: 15,
-          }}
-        /> */}
         <View
           style={{
             flexDirection: 'row',
@@ -239,13 +232,15 @@ const Home = () => {
           }}
         >
           <Image
-            source={betterImage.profileImage}
+            source={{
+              uri: 'https://cdn.discordapp.com/avatars/690198889982328846/e571154fc9abca7ca1e0abf56ac7e2c7?size=1024',
+            }}
             style={{
               width: 60,
               height: 60,
               borderRadius: 35,
               borderWidth: 2,
-              borderColor: '#ff5f1f',
+              borderColor: '#FE5320',
             }}
           />
           <View style={{ flex: 1, marginLeft: 20 }}>
@@ -257,21 +252,22 @@ const Home = () => {
                 marginBottom: 2,
               }}
             >
-              Staff Favorites
+              Aya's Top Picks
             </Text>
             <Text
               style={{
-                color: '#a0a0a0',
+                color: '#aaa',
                 fontWeight: '400',
                 fontSize: 12,
               }}
             >
-              Want to know our chefs' favs?
+              Check out Aya's favorite dishes
             </Text>
           </View>
           <TouchableOpacity
+            onPress={() => navigation.navigate(ROUTE.HOME.CHEFS_FAV)}
             style={{
-              backgroundColor: '#ff5f1f',
+              backgroundColor: '#FE5320',
               padding: 12,
               borderRadius: 12,
               alignItems: 'center',
@@ -282,10 +278,7 @@ const Home = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <CategoryContainer
-        restaurantCategories={restaurantCategories}
-        restaurants={restaurants}
-      />
+      <CategoryContainer categories={categories} />
       {/* <View style={{ marginVertical: 10 }}>
         <ScrollView
           horizontal
@@ -318,4 +311,10 @@ const Home = () => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonStyle: {
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
+  },
+});

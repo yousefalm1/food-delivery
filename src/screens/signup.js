@@ -1,13 +1,57 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { ChevronLeft } from 'lucide-react-native';
 import LongInput from '../components/auth/longInput';
 import AuthButton from '../components/auth/AuthButton';
 import { useNavigation } from '@react-navigation/native';
 import ROUTE from '../Navigation';
+import UserContext from '../context/UserContext';
+import { useMutation } from '@tanstack/react-query';
+import { register } from '../api/auth';
+import * as ImagePicker from 'expo-image-picker';
 
-const SignUp = ({}) => {
+const SignUp = () => {
   const navigation = useNavigation();
+
+  const { authenticated, setAuthenticated } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    password: '',
+  });
+
+  const [image, setImage] = useState(null);
+  const { mutate } = useMutation({
+    mutationFn: () => {
+      register(userInfo, image);
+    },
+    onSuccess: () => {
+      console.log('Registration successful:');
+      setAuthenticated(true);
+    },
+    onError: (error) => {
+      console.log(
+        'Registration failed:',
+        error.response?.data || error.message
+      );
+      console.log('Full error:', error);
+    },
+  });
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+  const handleRegister = () => {
+    mutate();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,11 +68,41 @@ const SignUp = ({}) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <LongInput placeholder="Username" />
-        <LongInput placeholder="Email" />
-        <LongInput placeholder="Password" secureTextEntry />
-        <LongInput placeholder="Confirm password" secureTextEntry />
+        <LongInput
+          placeholder="Username"
+          value={userInfo.username}
+          autoCapitalize="none"
+          secureTextEntry={false}
+          onChangeText={(text) => {
+            console.log('Username changed:', text);
+            setUserInfo({ ...userInfo, username: text });
+          }}
+          name="username"
+        />
+        <LongInput
+          placeholder="Password"
+          name="password"
+          value={userInfo.password}
+          secureTextEntry={true}
+          autoCapitalize="none"
+          onChangeText={(text) => {
+            console.log('Password changed:', text);
+            setUserInfo({ ...userInfo, password: text });
+          }}
+        />
+        <TouchableOpacity style={{ marginTop: 20 }} onPress={pickImage}>
+          <Text style={{ fontSize: 16 }}>Upload Profile Image</Text>
+        </TouchableOpacity>
       </View>
+      {image && (
+        <Image
+          source={{ uri: image }}
+          style={{
+            width: 100,
+            height: 100,
+          }}
+        />
+      )}
 
       <View style={styles.footerContainer}>
         <Text style={styles.registerText}>
@@ -39,7 +113,7 @@ const SignUp = ({}) => {
             <Text style={styles.registerLink}>Log in</Text>
           </TouchableOpacity>
         </Text>
-        <AuthButton text="Sign in" />
+        <AuthButton text="Sign in" onPress={handleRegister} />
       </View>
     </View>
   );

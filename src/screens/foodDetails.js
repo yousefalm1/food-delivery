@@ -30,6 +30,7 @@ const FoodDetails = ({ route }) => {
   const navigation = useNavigation();
   const { item, restaurant } = route.params;
   const { addToCart } = useCart();
+  console.log(item);
 
   const [quantity, setQuantity] = useState(1);
   const totalPrice = item.price * quantity;

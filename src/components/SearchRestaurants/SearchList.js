@@ -21,7 +21,7 @@ const SearchList = ({ filteredRestaurants }) => {
         subText={`${filteredRestaurants.length} results`}
       />
       {filteredRestaurants.map((restaurant) => (
-        <SearchCard restaurant={restaurant} />
+        <SearchCard restaurant={restaurant} key={restaurant.id} />
       ))}
     </ScrollView>
   );

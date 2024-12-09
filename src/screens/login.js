@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,8 +12,30 @@ import LongInput from '../components/auth/longInput';
 import AuthButton from '../components/auth/AuthButton';
 import { useNavigation } from '@react-navigation/native';
 import ROUTE from '../Navigation';
+import UserContext from '../context/UserContext';
+import { useMutation } from '@tanstack/react-query';
+import { login } from '../api/auth';
 
 const Login = () => {
+  const { authenticated, setAuthenticated } = useContext(UserContext);
+
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    password: '',
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: () => login(userInfo),
+    onSuccess: () => {
+      setAuthenticated(true);
+    },
+  });
+
+  const handleLogin = () => {
+    console.log(userInfo);
+    mutate();
+  };
+
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -34,8 +56,24 @@ const Login = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <LongInput placeholder="Phone, email or username" />
-          <LongInput placeholder="Password" />
+          <LongInput
+            placeholder="Username"
+            value={userInfo.email}
+            autoCapitalize="none"
+            name="email"
+            required
+            onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
+          />
+          <LongInput
+            placeholder="Password"
+            value={userInfo.password}
+            autoCapitalize="none"
+            name="password"
+            required
+            onChangeText={(text) =>
+              setUserInfo({ ...userInfo, password: text })
+            }
+          />
         </View>
 
         <View style={styles.footerContainer}>
@@ -48,7 +86,7 @@ const Login = () => {
             </TouchableOpacity>
           </Text>
 
-          <AuthButton text="Sign in" />
+          <AuthButton text="Sign in" onPress={handleLogin} />
         </View>
       </View>
     </View>

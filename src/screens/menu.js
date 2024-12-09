@@ -33,7 +33,8 @@ const Menu = ({ route }) => {
   const { cart } = useCart();
 
   const hasCartItems = cart.length > 0;
-  const { restaurant } = route.params;
+  const { restaurant, category } = route.params;
+  console.log(restaurant);
   const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
     <View style={{ flex: 1 }}>
@@ -61,7 +62,7 @@ const Menu = ({ route }) => {
           >
             <ChevronLeft size={20} color={'white'} />
           </TouchableOpacity>
-          <linearGradient
+          <LinearGradient
             colors={[
               'rgba(0,0,0,0)',
               'rgba(0,0,0,0.1)',
@@ -99,7 +100,7 @@ const Menu = ({ route }) => {
           >
             <View style={{ gap: 6 }}>
               <Text style={{ color: '#5e5e5e', fontWeight: 400 }}>
-                {restaurant.deliveryTime} - {restaurant.category} - Restaurant
+                {restaurant.deliveryTime} - {restaurant.categ} - Restaurant
               </Text>
               <View
                 style={{
@@ -130,7 +131,11 @@ const Menu = ({ route }) => {
             </Text>
           </View>
 
-          <MenuItems menuItems={restaurant.menuItems} restaurant={restaurant} />
+          <MenuItems
+            menuItems={restaurant.items}
+            restaurant={restaurant}
+            category={category}
+          />
         </View>
       </ScrollView>
       {hasCartItems && (

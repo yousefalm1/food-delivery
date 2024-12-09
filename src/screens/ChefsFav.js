@@ -1,0 +1,462 @@
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useCart } from '../context/CartContext';
+import { ChevronLeft, ShoppingCart } from 'lucide-react-native';
+import ROUTE from '../Navigation/index';
+import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { FadeInDown } from 'react-native-reanimated';
+import dishesBetterImages from '../../assets/data/BetterImage';
+import { Plus, Timer } from 'lucide-react-native';
+import restaurants from '../../assets/data/restaurant';
+
+const ChefsFav = () => {
+  const navigation = useNavigation();
+  const { cart } = useCart();
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ flex: 1, backgroundColor: '#161616' }}
+    >
+      <LinearGradient colors={['#161616', '#1E1E1E']} style={styles.container}>
+        <View
+          style={{
+            marginTop: 15,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 5,
+          }}
+        >
+          {/* Back Button */}
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.buttonStyle}
+          >
+            <ChevronLeft size={20} color="#FE5320" />
+          </TouchableOpacity>
+
+          {/* Cart Button */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('TabNavigator', { screen: ROUTE.HOME.CART })
+            }
+            style={styles.buttonStyle}
+          >
+            <ShoppingCart size={20} color="#FE5320" strokeWidth={2} />
+            {cart.length > 0 && (
+              <View
+                style={{
+                  position: 'absolute',
+                  right: -6,
+                  top: -6,
+                  backgroundColor: '#FE5320',
+                  borderRadius: 12,
+                  minWidth: 18,
+                  height: 18,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderWidth: 1.5,
+                  borderColor: '#161616',
+                }}
+              >
+                <Text
+                  style={{ color: '#fff', fontSize: 10, fontWeight: 'bold' }}
+                >
+                  {cart.length}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+
+        <Animated.View
+          entering={FadeInDown.duration(800)}
+          style={styles.profileWrapper}
+        >
+          <View style={styles.profileCard}>
+            <LinearGradient
+              colors={['#2A2A2A', '#232323']}
+              style={styles.profileCardGradient}
+            >
+              <View style={styles.profileHeader}>
+                <Image
+                  source={{
+                    uri: 'https://cdn.discordapp.com/avatars/690198889982328846/e571154fc9abca7ca1e0abf56ac7e2c7?size=1024',
+                  }}
+                  style={styles.chefImage}
+                />
+                <View style={styles.headerText}>
+                  <Text style={styles.chefName}>Chef Aya</Text>
+                  <Text style={styles.chefTitle}>Executive Chef</Text>
+                </View>
+              </View>
+
+              <Text style={styles.chefBio}>
+                With over 15 years of culinary expertise, Chef Aya specializes
+                in Asian-Mediterranean fusion cuisine.
+              </Text>
+
+              <View style={styles.statsContainer}>
+                <View style={styles.statItem}>
+                  <Text style={styles.statNumber}>12</Text>
+                  <Text style={styles.statLabel}>Dishes</Text>
+                </View>
+                <View style={styles.statItem}>
+                  <Text style={styles.statNumber}>15+</Text>
+                  <Text style={styles.statLabel}>Years</Text>
+                </View>
+                <View style={styles.statItem}>
+                  <Text style={styles.statNumber}>4.9</Text>
+                  <Text style={styles.statLabel}>Rating</Text>
+                </View>
+              </View>
+            </LinearGradient>
+          </View>
+
+          <View style={styles.cardsContainer}>
+            <View style={styles.dishCard}>
+              <Image
+                source={dishesBetterImages['Spaghetti Carbonara']}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 15,
+                  alignSelf: 'center',
+                  marginBottom: 10,
+                }}
+              />
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 18,
+                  fontWeight: '600',
+                  marginBottom: 6,
+                }}
+              >
+                {restaurants[0].menuItems[0].name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 8,
+                  marginBottom: 8,
+                }}
+              >
+                <View
+                  style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}
+                >
+                  <Timer size={16} color="#fff" strokeWidth={1.5} />
+                  <Text
+                    style={{ color: '#aaa', fontSize: 13, fontWeight: '300' }}
+                  >
+                    {restaurants[0].deliveryTime}
+                  </Text>
+                </View>
+                <View style={{}}>
+                  <Text
+                    style={{ color: '#aaa', fontSize: 13, fontWeight: '300' }}
+                  >
+                    | 500cal
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{ color: '#fff', fontSize: 18, fontWeight: '500' }}
+                >
+                  KD {restaurants[0].menuItems[0].price}
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#ff5f1f',
+                    borderRadius: 100,
+                    padding: 8,
+                  }}
+                >
+                  <Plus color="#fff" size={20} strokeWidth={1.5} />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.dishCard}>
+              <Image
+                source={dishesBetterImages['Butter Chicken']}
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 15,
+                  alignSelf: 'center',
+                  marginBottom: 10,
+                }}
+              />
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 18,
+                  fontWeight: '600',
+                  marginBottom: 6,
+                }}
+              >
+                {restaurants[3].menuItems[0].name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 8,
+                  marginBottom: 8,
+                }}
+              >
+                <View
+                  style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}
+                >
+                  <Timer size={16} color="#fff" strokeWidth={1.5} />
+                  <Text
+                    style={{ color: '#aaa', fontSize: 13, fontWeight: '300' }}
+                  >
+                    {restaurants[3].deliveryTime}
+                  </Text>
+                </View>
+                <View style={{}}>
+                  <Text
+                    style={{ color: '#aaa', fontSize: 13, fontWeight: '300' }}
+                  >
+                    | 500cal
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{ color: '#fff', fontSize: 18, fontWeight: '500' }}
+                >
+                  KD {restaurants[3].menuItems[0].price}
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#ff5f1f',
+                    borderRadius: 100,
+                    padding: 8,
+                  }}
+                >
+                  <Plus color="#fff" size={20} strokeWidth={1.5} />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.dishCard}>
+              <Image
+                source={dishesBetterImages['Spaghetti Carbonara']}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 15,
+                  alignSelf: 'center',
+                  marginBottom: 10,
+                }}
+              />
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 18,
+                  fontWeight: '600',
+                  marginBottom: 6,
+                }}
+              >
+                {restaurants[0].menuItems[0].name}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 8,
+                  marginBottom: 8,
+                }}
+              >
+                <View
+                  style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}
+                >
+                  <Timer size={16} color="#fff" strokeWidth={1.5} />
+                  <Text
+                    style={{ color: '#aaa', fontSize: 13, fontWeight: '300' }}
+                  >
+                    {restaurants[0].deliveryTime}
+                  </Text>
+                </View>
+                <View style={{}}>
+                  <Text
+                    style={{ color: '#aaa', fontSize: 13, fontWeight: '300' }}
+                  >
+                    | 500cal
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{ color: '#fff', fontSize: 18, fontWeight: '500' }}
+                >
+                  KD {restaurants[0].menuItems[0].price}
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#ff5f1f',
+                    borderRadius: 100,
+                    padding: 8,
+                  }}
+                >
+                  <Plus color="#fff" size={20} strokeWidth={1.5} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Animated.View>
+      </LinearGradient>
+    </ScrollView>
+  );
+};
+
+export default ChefsFav;
+
+const styles = StyleSheet.create({
+  buttonStyle: {
+    padding: 8,
+    backgroundColor: '#232323',
+    borderRadius: 12,
+  },
+  container: {
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 15,
+  },
+  profileWrapper: {
+    marginBottom: 20,
+  },
+  profileCard: {
+    borderRadius: 16,
+    marginTop: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  profileCardGradient: {
+    borderRadius: 16,
+    padding: 15,
+  },
+  profileHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  headerText: {
+    marginLeft: 15,
+  },
+  chefImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 3,
+    borderColor: '#ff5f1f',
+  },
+  chefName: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+  chefTitle: {
+    color: '#ff5f1f',
+    fontSize: 16,
+    marginTop: 4,
+    letterSpacing: 0.5,
+  },
+  chefBio: {
+    color: '#fff',
+    fontSize: 14,
+    lineHeight: 20,
+    opacity: 0.9,
+    marginBottom: 15,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    borderTopColor: '#393939',
+    paddingTop: 12,
+    marginTop: 5,
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statNumber: {
+    color: '#ff5f1f',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  statLabel: {
+    color: '#fff',
+    fontSize: 12,
+    marginTop: 4,
+    opacity: 0.9,
+  },
+  cardsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 15,
+    marginTop: 20,
+  },
+  dishCard: {
+    borderRadius: 20,
+    width: '47%',
+    padding: 12,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    borderColor: '#2A2A2A',
+    borderWidth: 1.5,
+    backgroundColor: '#161616',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+
+    borderTopColor: '#ff5f1f20',
+    borderRightColor: '#2A2A2A',
+    borderBottomColor: '#2A2A2A',
+    borderLeftColor: '#2A2A2A',
+  },
+});

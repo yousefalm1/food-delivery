@@ -11,13 +11,17 @@ import { Navigation } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import ROUTE from '../../Navigation';
 
-const FoodCardContent = ({ item, restaurant }) => {
+const FoodCardContent = ({ item, restaurant, category }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.card}
       onPress={() =>
-        navigation.navigate(ROUTE.HOME.FOOD_DETAILS, { item, restaurant })
+        navigation.navigate(ROUTE.HOME.FOOD_DETAILS, {
+          item,
+          restaurant,
+          category,
+        })
       }
     >
       <ImageBackground

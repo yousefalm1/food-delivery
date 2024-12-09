@@ -3,7 +3,7 @@ import React from 'react';
 import { SearchIcon } from 'lucide-react-native';
 const SearchBar = ({ setSearch }) => {
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={{ position: 'relative', marginTop: 15 }}>
       <TextInput
         placeholder="Search restaurants, cuisines, dishes"
         onChangeText={(text) => setSearch(text)}

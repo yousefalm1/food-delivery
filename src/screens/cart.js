@@ -24,7 +24,7 @@ const Cart = () => {
   const total = subtotal + fee;
 
   return (
-    <View style={{ padding: 20, flex: 1, backgroundColor: '#121212' }}>
+    <View style={{ padding: 20, flex: 1, backgroundColor: '#161616' }}>
       <View
         style={{
           flexDirection: 'row',
@@ -41,7 +41,7 @@ const Cart = () => {
             left: 0,
             padding: 10,
             borderRadius: 100,
-            backgroundColor: '#ff5f1f',
+            backgroundColor: '#FE5320',
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 1 },
             shadowOpacity: 0.1,
@@ -157,20 +157,20 @@ const Cart = () => {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          borderRadius: 20,
-          padding: 15,
+          borderRadius: 16,
+          padding: 16,
           marginBottom: 15,
-          backgroundColor: '#121212',
-          shadowColor: '#000000',
+          backgroundColor: '#1A1A1A',
+          shadowColor: '#000',
           shadowOffset: {
             width: 0,
-            height: 25,
+            height: 2,
           },
-          shadowOpacity: 1,
-          shadowRadius: 45,
-          elevation: 45,
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+          elevation: 3,
           borderWidth: 1,
-          borderColor: '#2A2A2A',
+          borderColor: '#242424',
         }}
       >
         <View style={{ flex: 1 }}>

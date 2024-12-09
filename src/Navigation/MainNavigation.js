@@ -7,8 +7,22 @@ import ROUTE from '../Navigation/index';
 import Home from '../screens/home';
 import Menu from '../screens/menu';
 import FoodDetails from '../screens/foodDetails';
-import { HomeIcon, House, SearchIcon, ShoppingCart } from 'lucide-react-native';
+import {
+  HomeIcon,
+  House,
+  SearchIcon,
+  ShoppingCart,
+  User,
+  User2,
+  UserX2,
+} from 'lucide-react-native';
 import Search from '../screens/Search';
+import Categories from '../screens/Categoires';
+import HomeNav from './HomeNavigation/homeNav';
+import Profile from '../screens/ProfilePage';
+import RewardsPage from '../screens/RewardsPage';
+import OrderHistory from '../screens/OrderHistory';
+import RedeemRewards from '../screens/RedeemRewards';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,18 +39,17 @@ function TabNavigator() {
         },
         tabBarActiveTintColor: '#FE5320',
         tabBarLabelStyle: {
-          color: '#1E1A18', // This makes the label text always gray
+          color: '#1E1A18',
         },
       }}
     >
       <Tab.Screen
         name={ROUTE.HOME.HOME}
-        component={Home}
+        component={HomeNav}
         options={{
           tabBarIcon: ({ color, size }) => <House color={color} size={size} />,
         }}
       />
-
       <Tab.Screen
         name={ROUTE.HOME.SEARCH}
         component={Search}
@@ -46,7 +59,6 @@ function TabNavigator() {
           ),
         }}
       />
-      {/* <Tab.Screen name={ROUTE.HOME.MENU} component={Menu} /> */}
       <Tab.Screen
         name={ROUTE.HOME.CART}
         component={Cart}
@@ -54,6 +66,13 @@ function TabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <ShoppingCart color={color} size={size} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name={ROUTE.HOME.PROFILE}
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color, size }) => <User2 color={color} size={size} />,
         }}
       />
     </Tab.Navigator>
@@ -77,6 +96,13 @@ const MainNavigation = () => {
           cardOverlayEnabled: true,
           animationEnabled: true,
         }}
+      />
+      <Stack.Screen name="Categories" component={Categories} />
+      <Stack.Screen name={ROUTE.HOME.REWARDS} component={RewardsPage} />
+      <Stack.Screen name={ROUTE.HOME.ORDER_HISTORY} component={OrderHistory} />
+      <Stack.Screen
+        name={ROUTE.HOME.REDEEM_REWARDS}
+        component={RedeemRewards}
       />
     </Stack.Navigator>
   );

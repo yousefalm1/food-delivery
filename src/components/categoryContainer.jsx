@@ -1,15 +1,24 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-
+import { View } from 'react-native';
 import React from 'react';
 import CategoriesList from './categoriesList';
-import SectionHeader from './reuseable/SectionHeader';
+import { useNavigation } from '@react-navigation/native';
 
-const CategoryContainer = ({ restaurantCategories, restaurants }) => {
+const CategoryContainer = ({ categories }) => {
+  const navigation = useNavigation();
+
+  const handleCategoryPress = (category) => {
+    navigation.navigate(ROUTE.HOME.CATEGORIES, {
+      categoryName: category.name,
+      restaurants: category.restaurants,
+    });
+  };
+
   return (
     <View style={{ marginVertical: 10 }}>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <CategoriesList restaurantCategories={restaurantCategories} />
-      </ScrollView>
+      <CategoriesList
+        categories={categories}
+        onCategoryPress={handleCategoryPress}
+      />
     </View>
   );
 };

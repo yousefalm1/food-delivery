@@ -14,8 +14,16 @@ import { Text } from '../../App';
 import SectionHeader from '../components/reuseable/SectionHeader';
 import ROUTE from '../Navigation/index';
 import SearchContainer from '../components/SearchRestaurants/SearchContainer';
+import { getRestaurants } from '../api/resturants';
+import { useQuery } from '@tanstack/react-query';
 
 const Search = () => {
+  const { data: restaurants } = useQuery({
+    queryKey: ['restaurants'],
+    queryFn: getRestaurants,
+  });
+  console.log(restaurants);
+
   return <SearchContainer restaurants={restaurants} />;
 };
 

@@ -1,19 +1,19 @@
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, ScrollView } from 'react-native';
 import React from 'react';
 import Category from './categoryBox';
 
-const CategoriesList = ({ restaurantCategories, restaurants }) => {
+const CategoriesList = ({ categories, onCategoryPress }) => {
   return (
     <View style={styles.container}>
-      <FlatList
-        data={restaurantCategories}
-        horizontal={true}
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <Category category={item} restaurants={restaurants} />
-        )}
-        keyExtractor={(item) => item.id}
-      />
+        contentContainerStyle={{ gap: 15 }}
+      >
+        {categories?.map((category, index) => (
+          <Category key={index} category={category} onPress={onCategoryPress} />
+        ))}
+      </ScrollView>
     </View>
   );
 };
