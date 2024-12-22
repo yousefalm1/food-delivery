@@ -8,7 +8,7 @@ const CategoriesList = ({ categories, onCategoryPress }) => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 15 }}
+        contentContainerStyle={{ gap: 10 }}
       >
         {categories?.map((category, index) => (
           <Category key={index} category={category} onPress={onCategoryPress} />
@@ -22,6 +22,6 @@ export default CategoriesList;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    marginVertical: 20,
   },
 });

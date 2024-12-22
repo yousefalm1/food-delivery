@@ -31,8 +31,10 @@ const Login = () => {
     },
   });
 
+  // console.log(userInfo);
+
   const handleLogin = () => {
-    console.log(userInfo);
+    // console.log(userInfo);
     mutate();
   };
 
@@ -47,29 +49,41 @@ const Login = () => {
       </TouchableOpacity> */}
 
       <View style={styles.contentContainer}>
+        <View style={styles.logoContainer}>
+          <Text style={styles.logoText}>يبيلها</Text>
+          <Text style={styles.logoTextLatin}>YABELA</Text>
+        </View>
+
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Let's sign you in.</Text>
-          <Text style={styles.subHeaderText}>Welcome back,</Text>
+          <Text style={styles.welcomeText}>Welcome Back</Text>
+          <Text style={styles.headerText}>Sign In</Text>
           <Text style={styles.subHeaderText}>
-            your next meal is just a tap away.
+            Please enter your credentials
           </Text>
         </View>
 
         <View style={styles.inputContainer}>
-          <LongInput
+          <TextInput
             placeholder="Username"
-            value={userInfo.email}
+            value={userInfo.username}
             autoCapitalize="none"
-            name="email"
+            name="username"
             required
-            onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
+            placeholderTextColor="gray"
+            style={styles.input}
+            onChangeText={(text) =>
+              setUserInfo({ ...userInfo, username: text })
+            }
           />
-          <LongInput
+          <TextInput
             placeholder="Password"
             value={userInfo.password}
             autoCapitalize="none"
             name="password"
+            placeholderTextColor="gray"
+            style={styles.input}
             required
+            secureTextEntry={true}
             onChangeText={(text) =>
               setUserInfo({ ...userInfo, password: text })
             }
@@ -86,7 +100,9 @@ const Login = () => {
             </TouchableOpacity>
           </Text>
 
-          <AuthButton text="Sign in" onPress={handleLogin} />
+          <TouchableOpacity style={styles.signInButton} onPress={handleLogin}>
+            <Text style={styles.signInText}>Sign in</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -97,7 +113,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#121212',
+    paddingTop: 80,
+    backgroundColor: '#161616',
   },
   backButton: {
     marginBottom: 20,
@@ -105,19 +122,51 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
   },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 40,
+    marginTop: 20,
+  },
+  logoText: {
+    color: '#FE5320',
+    fontSize: 48,
+    fontFamily: 'Poppins-Bold',
+    marginBottom: 5,
+  },
+  logoTextLatin: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'Poppins-SemiBold',
+    letterSpacing: 8,
+  },
   headerContainer: {
     marginBottom: 40,
+    alignItems: 'center',
+    paddingHorizontal: 25,
+  },
+  welcomeText: {
+    color: '#888',
+    fontSize: 18,
+    fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    marginBottom: 8,
   },
   headerText: {
     color: '#fff',
-    fontSize: 40,
-    fontWeight: '600',
+    fontSize: 32,
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    marginBottom: 12,
   },
   subHeaderText: {
-    color: '#fefefe',
-    fontSize: 30,
-    fontWeight: '300',
-    marginTop: 10,
+    color: '#666',
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+    opacity: 0.9,
   },
   inputContainer: {
     marginBottom: 40,
@@ -128,17 +177,52 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   registerText: {
-    color: '#fefefe',
-    fontSize: 14,
-    fontWeight: '400',
+    color: '#aaa',
+    fontSize: 15,
+    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     textAlign: 'center',
     marginBottom: 20,
+    letterSpacing: 0.2,
   },
   registerLink: {
-    color: '#ff5f1f',
+    color: '#FE5320',
     marginLeft: 5,
     marginBottom: -3,
-    fontWeight: '600',
+    letterSpacing: 0.3,
+    fontFamily: 'Poppins-Bold',
+  },
+  input: {
+    width: '100%',
+    color: '#fefefe',
+    backgroundColor: '#222222',
+    padding: 20,
+    borderColor: '#444',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: 20,
+  },
+  signInButton: {
+    backgroundColor: '#1A1A1A',
+    padding: 20,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#242424',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  signInText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
   },
 });
 

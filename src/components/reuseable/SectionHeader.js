@@ -11,10 +11,16 @@ const SectionHeader = ({ mainText, subText }) => {
         marginVertical: 10,
       }}
     >
-      <Text style={{ color: '#fff', fontSize: 20, fontWeight: '700' }}>
+      <Text style={{ color: '#fff', fontSize: 20, fontFamily: 'Poppins-Bold' }}>
         {mainText}
       </Text>
-      <Text style={{ color: '#FE5320', fontSize: 12, fontWeight: '400' }}>
+      <Text
+        style={{
+          color: '#FE5320',
+          fontSize: 12,
+          fontFamily: 'Poppins-Regular',
+        }}
+      >
         {subText}
       </Text>
     </View>

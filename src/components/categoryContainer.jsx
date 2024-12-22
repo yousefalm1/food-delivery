@@ -1,7 +1,8 @@
 import { View } from 'react-native';
 import React from 'react';
 import CategoriesList from './categoriesList';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import ROUTE from '../Navigation/index';
 
 const CategoryContainer = ({ categories }) => {
   const navigation = useNavigation();
@@ -14,7 +15,7 @@ const CategoryContainer = ({ categories }) => {
   };
 
   return (
-    <View style={{ marginVertical: 10 }}>
+    <View style={{ marginBottom: 25 }}>
       <CategoriesList
         categories={categories}
         onCategoryPress={handleCategoryPress}

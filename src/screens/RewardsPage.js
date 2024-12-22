@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   pointsText: {
     fontSize: 48,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     color: '#FFFFFF',
     marginTop: 16,
   },
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     color: '#FE5320',
     marginLeft: 4,
     fontSize: 13,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   progressContainer: {
     padding: 24,
@@ -289,13 +289,13 @@ const styles = StyleSheet.create({
   progressTitle: {
     color: '#FFFFFF',
     fontSize: 15,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.3,
   },
   progressPercentage: {
     color: '#FE5320',
     fontSize: 15,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     letterSpacing: 0.3,
   },
   progressBarContainer: {
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   progressLabel: {
     color: 'rgba(255, 255, 255, 0.6)',
     fontSize: 13,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     letterSpacing: 0.2,
   },
   actionsContainer: {
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 15,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFFFFF',
     marginBottom: 16,
     letterSpacing: 0.8,
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     marginLeft: 12,
     letterSpacing: 0.3,
   },
@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
   },
   activityPoints: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     marginLeft: 12,
   },
   contentContainer: {

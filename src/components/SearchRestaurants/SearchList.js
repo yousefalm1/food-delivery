@@ -20,8 +20,8 @@ const SearchList = ({ filteredRestaurants }) => {
         mainText="Cuisines and Restaurants"
         subText={`${filteredRestaurants.length} results`}
       />
-      {filteredRestaurants.map((restaurant) => (
-        <SearchCard restaurant={restaurant} key={restaurant.id} />
+      {filteredRestaurants.map((restaurant, index) => (
+        <SearchCard restaurant={restaurant} key={index} index={index} />
       ))}
     </ScrollView>
   );

@@ -13,7 +13,15 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ROUTE from '../Navigation/index';
 import { ChevronLeft } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import { deleteToken, setToken } from '../api/storage';
+import { useContext } from 'react';
+
+import UserContext from '../context/UserContext';
+
 const ProfilePage = () => {
+  const { authenticated, setAuthenticated } = useContext(UserContext);
+
   const navigation = useNavigation();
 
   const [userInfo] = useState({
@@ -21,8 +29,13 @@ const ProfilePage = () => {
     email: 'yousefalm@outlook.com',
     phone: '50215090',
     address: 'Jabriya, Kuwait',
-    profileImage: 'https://example.com/profile-placeholder.jpg',
+    profileImage: 'https://avatars.githubusercontent.com/u/129464541?v=4',
   });
+
+  const logout = () => {
+    deleteToken();
+    setAuthenticated(false);
+  };
 
   const [orderStats] = useState({
     totalOrders: 47,
@@ -92,13 +105,18 @@ const ProfilePage = () => {
               icon: 'location-on',
               value: orderStats.savedAddresses,
               label: 'Locations',
+              onPress: () => navigation.navigate(ROUTE.HOME.LOCATIONS),
             },
           ].map((item, index) => (
-            <View key={index} style={styles.statCard}>
+            <TouchableOpacity
+              key={index}
+              style={styles.statCard}
+              onPress={item.onPress}
+            >
               <Icon name={item.icon} size={24} color="#FE5320" />
               <Text style={styles.statValue}>{item.value}</Text>
               <Text style={styles.statLabel}>{item.label}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </View>
@@ -152,7 +170,16 @@ const ProfilePage = () => {
             title: 'Rewards & Points',
             onPress: () => navigation.navigate(ROUTE.HOME.REWARDS),
           },
-          { icon: 'payment', title: 'Payment Methods' },
+          {
+            icon: 'payment',
+            title: 'Payment Methods',
+            onPress: () => navigation.navigate(ROUTE.HOME.PAYMENT_METHODS),
+          },
+          {
+            icon: 'logout',
+            title: 'Logout',
+            onPress: () => logout(),
+          },
         ].map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -243,7 +270,7 @@ const styles = StyleSheet.create({
 
   userName: {
     fontSize: 21,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFFFFF',
     letterSpacing: 0.6,
     marginBottom: 4,
@@ -266,7 +293,7 @@ const styles = StyleSheet.create({
     color: '#FE5320',
     marginLeft: 4,
     fontSize: 13,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
 
   statsContainer: {
@@ -296,7 +323,7 @@ const styles = StyleSheet.create({
 
   statValue: {
     fontSize: 24,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFFFFF',
     marginTop: 8,
     letterSpacing: 0.4,
@@ -318,7 +345,7 @@ const styles = StyleSheet.create({
 
   sectionTitle: {
     fontSize: 15,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFFFFF',
     marginBottom: 16,
     letterSpacing: 0.8,
@@ -386,20 +413,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#242424',
     marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
 
   actionText: {
     flex: 1,
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     marginLeft: 12,
-    letterSpacing: 0.3,
   },
 
   actionArrow: {

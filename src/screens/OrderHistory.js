@@ -8,25 +8,33 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { ChevronLeft } from 'lucide-react-native';
 const OrderHistory = () => {
   const navigation = useNavigation();
-  // Sample order data - replace with your actual data
   const orders = [
     {
       id: '1',
-      restaurant: 'Burger House',
-      date: '24 Mar 2024',
+      restaurant: 'Wok Express',
+      date: '5 Dec 2024',
       status: 'Delivered',
       total: 'KWD 15.750',
       items: 3,
     },
     {
       id: '2',
-      restaurant: 'Pizza Palace',
-      date: '22 Mar 2024',
+      restaurant: 'Taco Town',
+      date: '8 Dec 2024',
       status: 'Delivered',
       total: 'KWD 22.500',
       items: 2,
+    },
+    {
+      id: '3',
+      restaurant: 'T-Grill',
+      date: '9 Dec 2024',
+      status: 'Processing',
+      total: 'KWD 18.000',
+      items: 4,
     },
     // Add more orders as needed
   ];
@@ -47,6 +55,21 @@ const OrderHistory = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
+        <View
+          style={{
+            position: 'absolute',
+            top: 50,
+            left: 20,
+            zIndex: 1,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.buttonStyle}
+          >
+            <ChevronLeft size={20} color="#FE5320" />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.headerTitle}>Order History</Text>
         <Text style={styles.headerSubtitle}>{orders.length} Orders</Text>
       </View>
@@ -104,6 +127,11 @@ const OrderHistory = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
+  },
   container: {
     flex: 1,
     backgroundColor: '#161616',
@@ -111,13 +139,16 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     paddingTop: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
     backgroundColor: '#1A1A1A',
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Bold',
     color: '#FFFFFF',
     marginBottom: 8,
   },
@@ -147,7 +178,7 @@ const styles = StyleSheet.create({
   restaurantName: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     marginLeft: 8,
   },
   orderDate: {
@@ -173,7 +204,7 @@ const styles = StyleSheet.create({
   detailValue: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   orderFooter: {
     flexDirection: 'row',
@@ -187,7 +218,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 12,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   reorderButton: {
     flexDirection: 'row',
@@ -200,7 +231,7 @@ const styles = StyleSheet.create({
   reorderText: {
     color: '#FE5320',
     fontSize: 12,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     marginRight: 4,
   },
 });

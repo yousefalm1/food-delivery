@@ -22,11 +22,7 @@ const Search = () => {
     queryKey: ['restaurants'],
     queryFn: getRestaurants,
   });
-  console.log(restaurants);
-
   return <SearchContainer restaurants={restaurants} />;
 };
 
 export default Search;
-
-const styles = StyleSheet.create({});

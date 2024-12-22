@@ -9,7 +9,13 @@ import {
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ROUTE from '../Navigation/index';
-import { ChevronLeft, MapPin, ShoppingCart } from 'lucide-react-native';
+import {
+  ChevronLeft,
+  MapPin,
+  ShoppingCart,
+  Star,
+  Timer,
+} from 'lucide-react-native';
 import { useCart } from '../context/CartContext';
 
 const Categories = ({ route }) => {
@@ -40,7 +46,7 @@ const Categories = ({ route }) => {
           onPress={() => navigation.goBack()}
           style={styles.buttonStyle}
         >
-          <ChevronLeft size={20} color={'white'} />
+          <ChevronLeft size={20} color="#FE5320" />
         </TouchableOpacity>
 
         {/* Cart Button */}
@@ -50,26 +56,24 @@ const Categories = ({ route }) => {
           }
           style={styles.buttonStyle}
         >
-          <ShoppingCart size={20} color="#fff" strokeWidth={2} />
+          <ShoppingCart size={20} color="#FE5320" strokeWidth={2} />
           {cart.length > 0 && (
             <View
               style={{
                 position: 'absolute',
                 right: -6,
                 top: -6,
-                backgroundColor: '#fff',
+                backgroundColor: '#FE5320',
                 borderRadius: 12,
-                minWidth: 22,
-                height: 22,
+                minWidth: 18,
+                height: 18,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 2,
-                borderColor: '#ff5f1f',
+                borderWidth: 1.5,
+                borderColor: '#161616',
               }}
             >
-              <Text
-                style={{ color: '#ff5f1f', fontSize: 11, fontWeight: 'bold' }}
-              >
+              <Text style={{ color: '#fff', fontSize: 10, fontWeight: 'bold' }}>
                 {cart.length}
               </Text>
             </View>
@@ -88,20 +92,23 @@ const Categories = ({ route }) => {
                 category: category,
               })
             }
-            key={item.name}
-            style={styles.restaurantCard}
+            style={styles.container}
           >
             <Image source={{ uri: item.image }} style={styles.image} />
-            <View style={styles.infoContainer}>
+            <View style={styles.contentContainer}>
               <Text style={styles.restaurantName}>{item.name}</Text>
               <View style={styles.detailsContainer}>
-                <Text style={styles.deliveryFee}>Free Delivery</Text>
-                <Text style={styles.category}>· {item.deliveryTime}</Text>
+                <View style={styles.timeContainer}>
+                  <Timer size={16} color="#ff5f1f" strokeWidth={1.5} />
+                  <Text style={styles.deliveryTime}>{item.deliveryTime}</Text>
+                </View>
+                <Star size={16} color="#ff5f1f" strokeWidth={1.5} />
+                <Text style={styles.category}> {item.rating}</Text>
               </View>
             </View>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.name}
       />
     </View>
   );
@@ -111,61 +118,75 @@ export default Categories;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    borderRadius: 20,
+    width: '100%',
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#2A2A2A',
+    borderWidth: 1.5,
     backgroundColor: '#161616',
-    padding: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
+    borderTopColor: '#ff5f1f20',
+    borderRightColor: '#2A2A2A',
+    borderBottomColor: '#2A2A2A',
+    borderLeftColor: '#2A2A2A',
+    marginBottom: 10,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  restaurantName: {
+    color: '#fff',
+    fontSize: 18,
+    marginLeft: 10,
+    fontFamily: 'Poppins-SemiBold',
+    marginBottom: 6,
+  },
+  detailsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginLeft: 10,
+    marginBottom: 8,
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  deliveryTime: {
+    color: '#aaa',
+    fontSize: 13,
+    fontFamily: 'Poppins-Light',
+  },
+  category: {
+    color: '#aaa',
+    fontSize: 13,
+    fontFamily: 'Poppins-Light',
   },
   title: {
     color: '#fff',
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     marginVertical: 20,
   },
-  restaurantCard: {
-    backgroundColor: '#222222',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  restaurantName: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
-  },
   buttonStyle: {
-    padding: 10,
-    borderRadius: 100,
-    backgroundColor: '#ff5f1f',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
   },
   image: {
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 80,
     borderRadius: 15,
-  },
-  infoContainer: {
-    flex: 1,
-    marginLeft: 15,
-  },
-  detailsContainer: {
-    flexDirection: 'row',
-    marginTop: 6,
-    alignItems: 'center',
-  },
-  deliveryFee: {
-    color: '#ff5f1f',
-    fontWeight: '500',
-    fontSize: 12,
-  },
-  category: {
-    color: '#a0a0a0',
-    fontWeight: '400',
-    fontSize: 12,
-    marginLeft: 8,
   },
 });

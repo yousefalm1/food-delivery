@@ -2,12 +2,14 @@ import instance from './index';
 import { setToken } from './storage';
 
 const login = async (userInfo) => {
+  console.log(userInfo);
   const { data } = await instance.post('/auth/login', userInfo);
   setToken(data.token);
   return data;
 };
 
 const register = async (userInfo, image) => {
+  console.log(userInfo);
   const formData = new FormData();
 
   for (key in userInfo) {

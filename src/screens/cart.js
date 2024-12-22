@@ -12,10 +12,11 @@ import restaurants from '../../assets/data/restaurant';
 import AuthButton from '../components/auth/AuthButton';
 import { useNavigation } from '@react-navigation/native';
 import { useCart } from '../context/CartContext';
+import ROUTE from '../Navigation/index';
 
 const Cart = () => {
   const navigation = useNavigation();
-  const { cart } = useCart();
+  const { cart, updateQuantity, removeItem } = useCart();
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -30,30 +31,18 @@ const Cart = () => {
           flexDirection: 'row',
           alignItems: 'center',
           marginBottom: 40,
-          marginTop: 40,
+          marginTop: 45,
         }}
       >
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            padding: 10,
-            borderRadius: 100,
-            backgroundColor: '#FE5320',
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 1 },
-            shadowOpacity: 0.1,
-            shadowRadius: 2,
-            zIndex: 10,
-          }}
+          style={styles.buttonStyle}
         >
-          <ChevronLeft size={20} color="white" />
+          <ChevronLeft size={20} color="#FE5320" />
         </TouchableOpacity>
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', marginLeft: -38 }}>
           <Text style={{ color: '#fff', fontSize: 24, fontWeight: '600' }}>
-            Checkout
+            Cart
           </Text>
         </View>
       </View>
@@ -72,11 +61,11 @@ const Cart = () => {
               shadowColor: '#000000',
               shadowOffset: {
                 width: 0,
-                height: 25,
+                height: 4,
               },
-              shadowOpacity: 1,
-              shadowRadius: 45,
-              elevation: 45,
+              shadowOpacity: 0.15,
+              shadowRadius: 8,
+              elevation: 5,
               borderWidth: 0.5,
               borderColor: '#2A2A2A',
             }}
@@ -119,7 +108,7 @@ const Cart = () => {
                   borderColor: '#fff',
                   borderWidth: 0.5,
                 }}
-                onPress={() => handleQuantity('minus', index)}
+                onPress={() => updateQuantity(index, 'minus')}
               >
                 <Minus size={16} color="#fff" />
               </TouchableOpacity>
@@ -134,7 +123,7 @@ const Cart = () => {
                   borderColor: '#fff',
                   borderWidth: 0.5,
                 }}
-                onPress={() => handleQuantity('plus', index)}
+                onPress={() => updateQuantity(index, 'plus')}
               >
                 <Plus size={16} color="#fff" />
               </TouchableOpacity>
@@ -161,16 +150,16 @@ const Cart = () => {
           padding: 16,
           marginBottom: 15,
           backgroundColor: '#1A1A1A',
-          shadowColor: '#000',
+          shadowColor: '#000000',
           shadowOffset: {
             width: 0,
-            height: 2,
+            height: 4,
           },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-          elevation: 3,
-          borderWidth: 1,
-          borderColor: '#242424',
+          shadowOpacity: 0.15,
+          shadowRadius: 8,
+          elevation: 5,
+          borderWidth: 0.5,
+          borderColor: '#2A2A2A',
         }}
       >
         <View style={{ flex: 1 }}>
@@ -270,9 +259,21 @@ const Cart = () => {
           </View>
         </View>
       </View>
-      <AuthButton text="Checkout" style={{ marginTop: 20 }} />
+      <AuthButton
+        text="Checkout"
+        style={{ marginTop: 20 }}
+        onPress={() => navigation.navigate(ROUTE.HOME.CHECKOUT_CONFIRM)}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonStyle: {
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
+  },
+});
 
 export default Cart;

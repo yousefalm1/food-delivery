@@ -16,6 +16,7 @@ const AuthNavigation = () => {
           <View style={{ flex: 1, backgroundColor: '#121212' }}></View>
         ),
         headerTintColor: '#fefefe',
+        headerShown: false,
       }}
     >
       <Stack.Screen name={ROUTE.AUTH.LOGIN} component={Login} />

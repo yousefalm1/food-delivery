@@ -40,7 +40,7 @@ const RedeemRewards = () => {
             onPress={() => navigation.goBack()}
             style={styles.buttonStyle}
           >
-            <ChevronLeft size={20} color="#FE5320" strokeWidth={2} />
+            <ChevronLeft size={20} color="#FE5320" />
           </TouchableOpacity>
         </View>
         <View style={styles.headerContent}>
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   pointsText: {
     fontSize: 48,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
     color: '#FFFFFF',
     marginTop: 16,
   },
@@ -203,14 +203,14 @@ const styles = StyleSheet.create({
     color: '#FE5320',
     marginLeft: 4,
     fontSize: 13,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
   },
   categoriesContainer: {
     padding: 20,
   },
   sectionTitle: {
     fontSize: 15,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFFFFF',
     marginBottom: 16,
     letterSpacing: 0.8,
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   },
   rewardTitle: {
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
     color: '#FFFFFF',
     marginBottom: 4,
   },
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   pointsRequired: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FE5320',
   },
   historyContainer: {
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   },
   activityPoints: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     marginLeft: 12,
   },
   buttonStyle: {

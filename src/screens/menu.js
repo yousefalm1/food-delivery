@@ -19,6 +19,8 @@ import {
   Star,
   ThumbsUp,
   ThumbsUpIcon,
+  Timer,
+  ChevronRight,
 } from 'lucide-react-native';
 import RestaurantCardBox from '../components/restaurants/restaurantCardBox';
 import MenuItems from '../components/restaurants/menuItems';
@@ -38,47 +40,44 @@ const Menu = ({ route }) => {
   const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={{ backgroundColor: '#000', flex: 1 }}>
+      <ScrollView style={{ backgroundColor: '#161616', flex: 1 }}>
         <View>
           <Image
             source={{ uri: restaurant.image }}
             style={{ width: '100%', height: 300 }}
           />
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
+          <View
             style={{
               position: 'absolute',
-              top: 50,
+              top: 65,
               left: 20,
-              padding: 10,
-              borderRadius: 100,
-              backgroundColor: '#ff5f1f',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.1,
-              shadowRadius: 2,
-              zIndex: 10,
+              zIndex: 1,
             }}
           >
-            <ChevronLeft size={20} color={'white'} />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.buttonStyle}
+            >
+              <ChevronLeft size={20} color="#FE5320" />
+            </TouchableOpacity>
+          </View>
           <LinearGradient
             colors={[
-              'rgba(0,0,0,0)',
-              'rgba(0,0,0,0.1)',
-              'rgba(0,0,0,0.3)',
-              'rgba(0,0,0,0.5)',
-              'rgba(0,0,0,0.7)',
-              'rgba(0,0,0,0.85)',
-              'rgba(0,0,0,0.95)',
+              'rgba(22,22,22,0)',
+              'rgba(22,22,22,0)',
+              'rgba(22,22,22,0.25)',
+              'rgba(22,22,22,0.5)',
+              'rgba(22,22,22,0.75)',
+              'rgba(22,22,22,0.9)',
+              'rgba(22,22,22,1)',
             ]}
-            locations={[0, 0.3, 0.5, 0.65, 0.8, 0.9, 1]}
+            locations={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
             style={{
               position: 'absolute',
               left: 0,
               right: 0,
               bottom: 0,
-              height: 300,
+              height: 400,
             }}
           />
         </View>
@@ -99,8 +98,16 @@ const Menu = ({ route }) => {
             }}
           >
             <View style={{ gap: 6 }}>
-              <Text style={{ color: '#5e5e5e', fontWeight: 400 }}>
-                {restaurant.deliveryTime} - {restaurant.categ} - Restaurant
+              <Text
+                style={{
+                  color: '#5e5e5e',
+                  fontWeight: 400,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <Timer size={18} color="#5e5e5e" style={{ marginTop: 3 }} />{' '}
+                {restaurant.deliveryTime} • Restaurant
               </Text>
               <View
                 style={{
@@ -141,75 +148,34 @@ const Menu = ({ route }) => {
       {hasCartItems && (
         <View
           style={{
-            padding: 20,
-            backgroundColor: '#121212',
-            shadowColor: '#000000',
-            shadowOffset: {
-              width: 0,
-              height: 25,
-            },
-            shadowOpacity: 1,
-            shadowRadius: 45,
-            elevation: 45,
+            padding: 12,
+            backgroundColor: '#161616',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: -2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 8,
+            elevation: 5,
           }}
         >
           <TouchableOpacity
-            style={[styles.signInButton, { marginBottom: 20 }]}
+            style={[styles.cartButton]}
+            activeOpacity={0.7}
             onPress={() => {
               navigation.navigate('TabNavigator', {
                 screen: ROUTE.HOME.CART,
               });
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                paddingHorizontal: 10,
-              }}
-            >
-              <View
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.3)',
-                  borderRadius: 15,
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                }}
-              >
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontSize: 16,
-                    fontWeight: '700',
-                    letterSpacing: 1,
-                  }}
-                >
-                  {cart.length}
-                </Text>
+            <View style={styles.cartContent}>
+              <View style={styles.leftSection}>
+                <View style={styles.cartBadge}>
+                  <Text style={styles.cartBadgeText}>{cart.length}</Text>
+                </View>
+                <Text style={styles.cartTotal}>KD {total}</Text>
               </View>
-              <View style={{ marginHorizontal: 15 }}>
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontWeight: '600',
-                    fontSize: 17,
-                  }}
-                >
-                  View Basket
-                </Text>
-              </View>
-              <View>
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontWeight: '800',
-                    fontSize: 18,
-                    letterSpacing: 0.5,
-                  }}
-                >
-                  KD {total}
-                </Text>
+              <View style={styles.rightSection}>
+                <Text style={styles.cartText}>View Cart</Text>
+                <ChevronRight size={18} color="#FE5320" />
               </View>
             </View>
           </TouchableOpacity>
@@ -226,5 +192,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff5f1f',
     padding: 15,
     borderRadius: 20,
+  },
+  buttonStyle: {
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
+  },
+  cartButton: {
+    backgroundColor: '#1A1A1A',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#242424',
+  },
+  cartContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  leftSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  rightSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(254, 83, 32, 0.15)',
+  },
+  cartBadge: {
+    backgroundColor: 'rgba(254, 83, 32, 0.15)',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(254, 83, 32, 0.2)',
+  },
+  cartBadgeText: {
+    color: '#FE5320',
+    fontSize: 14,
+    fontFamily: 'Poppins-Bold',
+  },
+  cartText: {
+    color: '#FE5320',
+    fontSize: 14,
+    fontFamily: 'Poppins-Bold',
+  },
+  cartTotal: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontFamily: 'Poppins-Bold',
   },
 });

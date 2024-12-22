@@ -13,7 +13,7 @@ import SectionHeader from '../reuseable/SectionHeader';
 import ROUTE from '../../Navigation';
 import SearchBar from './SearchBar';
 import dishesBetterImages from '../../../assets/data/BetterImage';
-// import restaurants from '../../../assets/data/restaurant';
+import restaurants from '../../../assets/data/restaurant';
 import {
   AlarmClock,
   Clock,
@@ -25,11 +25,25 @@ import {
 const SearchContainer = ({ restaurants }) => {
   const [search, setSearch] = useState('');
 
-  const filteredRestaurants = restaurants.filter(
-    (restaurant) =>
-      restaurant.name.toLowerCase().includes(search.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredRestaurants =
+    restaurants?.filter((restaurant) => {
+      const restaurantName =
+        typeof restaurant.name === 'object'
+          ? restaurant.name.name?.toLowerCase()
+          : restaurant.name?.toLowerCase();
+
+      const restaurantCategory =
+        typeof restaurant.category === 'object'
+          ? restaurant.category.name?.toLowerCase()
+          : restaurant.category?.toLowerCase();
+
+      const searchTerm = search.toLowerCase();
+
+      return (
+        (restaurantName && restaurantName.includes(searchTerm)) ||
+        (restaurantCategory && restaurantCategory.includes(searchTerm))
+      );
+    }) || [];
 
   return (
     <View

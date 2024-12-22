@@ -1,29 +1,37 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import ROUTE from '../../Navigation/index';
-import { Text } from '../../../App';
 import dishesBetterImages from '../../../assets/data/BetterImage';
 import { useNavigation } from '@react-navigation/native';
 import { Timer } from 'lucide-react-native';
 
-const RestaurantItem = ({ restaurant }) => {
+const RestaurantItem = ({ restaurant, index }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate(ROUTE.HOME.MENU, { restaurant })}
-      key={restaurant.id}
       style={styles.container}
+      key={index}
     >
       <Image source={{ uri: restaurant.image }} style={styles.image} />
       <View style={styles.contentContainer}>
-        <Text style={styles.restaurantName}>{restaurant.name}</Text>
+        <Text style={styles.restaurantName}>
+          {typeof restaurant.name === 'object'
+            ? restaurant.name.name
+            : restaurant.name}
+        </Text>
         <View style={styles.detailsContainer}>
           <View style={styles.timeContainer}>
             <Timer size={16} color="#fff" strokeWidth={1.5} />
             <Text style={styles.deliveryTime}>{restaurant.deliveryTime}</Text>
           </View>
           <View>
-            <Text style={styles.category}>| {restaurant.category}</Text>
+            <Text style={styles.category}>
+              |{' '}
+              {typeof restaurant.category === 'object'
+                ? restaurant.category.name
+                : restaurant.category}
+            </Text>
           </View>
         </View>
       </View>
@@ -68,7 +76,7 @@ const styles = StyleSheet.create({
   restaurantName: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
     marginBottom: 6,
   },
   detailsContainer: {
@@ -85,12 +93,12 @@ const styles = StyleSheet.create({
   deliveryTime: {
     color: '#aaa',
     fontSize: 13,
-    fontWeight: '300',
+    fontFamily: 'Poppins-Light',
   },
   category: {
     color: '#aaa',
     fontSize: 13,
-    fontWeight: '300',
+    fontFamily: 'Poppins-Light',
   },
 });
 

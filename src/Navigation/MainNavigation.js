@@ -23,6 +23,13 @@ import Profile from '../screens/ProfilePage';
 import RewardsPage from '../screens/RewardsPage';
 import OrderHistory from '../screens/OrderHistory';
 import RedeemRewards from '../screens/RedeemRewards';
+import PaymentMethods from '../screens/PaymentMethods';
+import Chef2 from '../screens/Chef2';
+import Chef3 from '../screens/Chef3';
+import Locations from '../screens/locations';
+import CheckoutConfirm from '../screens/Checkoutcofirm';
+import OrderConfirmation from '../screens/OrderConfirmation';
+import ChefsFav from '../screens/ChefsFav';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,6 +43,7 @@ function TabNavigator() {
         tabBarStyle: {
           backgroundColor: '#161616',
           borderTopWidth: 0,
+          paddingTop: 10,
         },
         tabBarActiveTintColor: '#FE5320',
         tabBarLabelStyle: {
@@ -83,7 +91,18 @@ const MainNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="TabNavigator" component={TabNavigator} />
+      <Stack.Screen
+        name={ROUTE.HOME.CATEGORIES}
+        component={Categories}
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
+
+      <Stack.Screen name={ROUTE.HOME.SEARCH} component={Search} />
       <Stack.Screen name={ROUTE.HOME.MENU} component={Menu} />
+      <Stack.Screen name={ROUTE.HOME.CART} component={Cart} />
+
       <Stack.Screen
         name={ROUTE.HOME.FOOD_DETAILS}
         component={FoodDetails}
@@ -97,13 +116,31 @@ const MainNavigation = () => {
           animationEnabled: true,
         }}
       />
-      <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name={ROUTE.HOME.REWARDS} component={RewardsPage} />
       <Stack.Screen name={ROUTE.HOME.ORDER_HISTORY} component={OrderHistory} />
+
       <Stack.Screen
         name={ROUTE.HOME.REDEEM_REWARDS}
         component={RedeemRewards}
       />
+      <Stack.Screen
+        name={ROUTE.HOME.PAYMENT_METHODS}
+        component={PaymentMethods}
+      />
+      <Stack.Screen name={ROUTE.HOME.CHEF2} component={Chef2} />
+      <Stack.Screen name={ROUTE.HOME.CHEF3} component={Chef3} />
+      <Stack.Screen name={ROUTE.HOME.CHEFS_FAV} component={ChefsFav} />
+      <Stack.Screen name={ROUTE.HOME.LOCATIONS} component={Locations} />
+      <Stack.Screen
+        name={ROUTE.HOME.CHECKOUT_CONFIRM}
+        component={CheckoutConfirm}
+      />
+      <Stack.Screen
+        name={ROUTE.HOME.ORDER_CONFIRMATION}
+        component={OrderConfirmation}
+      />
+
+      <Stack.Screen name={ROUTE.HOME.HOME} component={HomeNav} />
     </Stack.Navigator>
   );
 };

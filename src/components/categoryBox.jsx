@@ -25,15 +25,12 @@ const Category = ({ category, onPress }) => {
       <Text
         style={{
           color: '#b7b7b7',
-          fontWeight: '500',
+          fontFamily: 'Poppins-Medium',
           fontSize: 12,
           marginTop: 10,
         }}
       >
         {category.name}
-      </Text>
-      <Text style={{ color: '#666', fontSize: 10 }}>
-        {category.restaurants.length} restaurants
       </Text>
     </TouchableOpacity>
   );
@@ -53,8 +50,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#b7b7b7',
-    fontWeight: '500',
     fontSize: 12,
+    fontFamily: 'Poppins-Medium',
     marginTop: 10,
   },
 });

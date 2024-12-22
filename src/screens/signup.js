@@ -1,5 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  TextInput,
+} from 'react-native';
 import { ChevronLeft } from 'lucide-react-native';
 import LongInput from '../components/auth/longInput';
 import AuthButton from '../components/auth/AuthButton';
@@ -20,6 +27,7 @@ const SignUp = () => {
   });
 
   const [image, setImage] = useState(null);
+
   const { mutate } = useMutation({
     mutationFn: () => {
       register(userInfo, image);
@@ -54,66 +62,95 @@ const SignUp = () => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 65,
+          left: 20,
+          zIndex: 1,
+        }}
+      >
         <TouchableOpacity
-          style={styles.backButton}
           onPress={() => navigation.goBack()}
+          style={styles.buttonStyle}
         >
-          <ChevronLeft size={28} color="#ff5f1f" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Join Us Today</Text>
-        <Text style={styles.subtitle}>
-          Sign up to explore delicious food delivered to your door.
-        </Text>
-      </View>
-
-      <View style={styles.inputContainer}>
-        <LongInput
-          placeholder="Username"
-          value={userInfo.username}
-          autoCapitalize="none"
-          secureTextEntry={false}
-          onChangeText={(text) => {
-            console.log('Username changed:', text);
-            setUserInfo({ ...userInfo, username: text });
-          }}
-          name="username"
-        />
-        <LongInput
-          placeholder="Password"
-          name="password"
-          value={userInfo.password}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            console.log('Password changed:', text);
-            setUserInfo({ ...userInfo, password: text });
-          }}
-        />
-        <TouchableOpacity style={{ marginTop: 20 }} onPress={pickImage}>
-          <Text style={{ fontSize: 16 }}>Upload Profile Image</Text>
+          <ChevronLeft size={20} color="#FE5320" />
         </TouchableOpacity>
       </View>
-      {image && (
-        <Image
-          source={{ uri: image }}
-          style={{
-            width: 100,
-            height: 100,
-          }}
-        />
-      )}
 
-      <View style={styles.footerContainer}>
-        <Text style={styles.registerText}>
-          Already have an account?
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTE.AUTH.LOGIN)}
-          >
-            <Text style={styles.registerLink}>Log in</Text>
+      <View style={styles.contentContainer}>
+        <View style={styles.logoContainer}>
+          <Text style={styles.logoText}>يبيلها</Text>
+          <Text style={styles.logoTextLatin}>YABELA</Text>
+        </View>
+
+        <View style={styles.headerContainer}>
+          <Text style={styles.welcomeText}>Create Account</Text>
+          <Text style={styles.headerText}>Sign Up</Text>
+          <Text style={styles.subHeaderText}>
+            Please fill in your information
+          </Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholderTextColor="gray"
+            style={styles.input}
+            placeholder="Username"
+            value={userInfo.username}
+            autoCapitalize="none"
+            secureTextEntry={false}
+            onChangeText={(text) =>
+              setUserInfo({ ...userInfo, username: text })
+            }
+            name="username"
+          />
+          <TextInput
+            placeholderTextColor="gray"
+            style={styles.input}
+            placeholder="Password"
+            name="password"
+            value={userInfo.password}
+            secureTextEntry={true}
+            autoCapitalize="none"
+            onChangeText={(text) =>
+              setUserInfo({ ...userInfo, password: text })
+            }
+          />
+          <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
+            <Text style={styles.uploadText}>Upload Profile Image</Text>
           </TouchableOpacity>
-        </Text>
-        <AuthButton text="Sign in" onPress={handleRegister} />
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{
+                width: 100,
+                height: 100,
+                alignSelf: 'center',
+                marginTop: 10,
+                borderRadius: 50,
+              }}
+            />
+          )}
+        </View>
+
+        <View style={styles.footerContainer}>
+          <Text style={styles.registerText}>
+            Already have an account?
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTE.AUTH.LOGIN)}
+            >
+              <Text style={styles.registerLink}>Log in</Text>
+            </TouchableOpacity>
+          </Text>
+
+          <TouchableOpacity
+            style={styles.signInButton}
+            onPress={handleRegister}
+          >
+            <Text style={styles.signInText}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -122,58 +159,127 @@ const SignUp = () => {
 export default SignUp;
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'rgba(254, 83, 32, 0.1)',
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    paddingTop: 80,
+    backgroundColor: '#161616',
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 40,
+    marginTop: 20,
+  },
+  logoText: {
+    color: '#FE5320',
+    fontSize: 48,
+    fontFamily: 'Poppins-Bold',
+    marginBottom: 5,
+  },
+  logoTextLatin: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'Poppins-SemiBold',
+    letterSpacing: 8,
+  },
+  inputContainer: {
+    marginBottom: 40,
+  },
+  input: {
+    width: '100%',
+    color: '#fefefe',
+    backgroundColor: '#222222',
+    padding: 20,
+    borderColor: '#444',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: 20,
+  },
+  uploadButton: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  uploadText: {
+    color: '#FE5320',
+    fontSize: 16,
+    fontFamily: 'Poppins-SemiBold',
+  },
   footerContainer: {
     flex: 1,
     justifyContent: 'flex-end',
   },
   registerText: {
-    color: '#fefefe',
-    fontSize: 14,
-    fontWeight: '400',
+    color: '#aaa',
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
     textAlign: 'center',
     marginBottom: 20,
+    letterSpacing: 0.2,
   },
   registerLink: {
-    color: '#ff5f1f',
+    color: '#FE5320',
     marginLeft: 5,
     marginBottom: -3,
-    fontWeight: '600',
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.3,
   },
-  container: {
+  signInButton: {
+    backgroundColor: '#1A1A1A',
     padding: 20,
-    flex: 1,
-    backgroundColor: '#121212',
-  },
-  header: {
-    marginBottom: 30,
-  },
-  backButton: {
-    marginBottom: 20,
-  },
-  title: {
-    color: '#fefefe',
-    fontSize: 30,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-  subtitle: {
-    color: '#fefefe',
-    fontSize: 18,
-    marginTop: 8,
-    opacity: 0.8,
-  },
-  inputContainer: {
-    marginBottom: 30,
-  },
-  buttonContainer: {
-    marginBottom: 20,
-  },
-  loginLink: {
+    borderRadius: 16,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#242424',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  loginLinkText: {
-    color: '#ff5f1f',
-    fontSize: 16,
-    fontWeight: '600',
+  signInText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontFamily: 'Poppins-SemiBold',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  headerContainer: {
+    marginBottom: 40,
+    alignItems: 'center',
+    paddingHorizontal: 25,
+  },
+  welcomeText: {
+    color: '#888',
+    fontSize: 18,
+    fontFamily: 'Poppins-Medium',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  headerText: {
+    color: '#fff',
+    fontSize: 32,
+    fontFamily: 'Poppins-Bold',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  subHeaderText: {
+    color: '#666',
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+    letterSpacing: 0.3,
+    textAlign: 'center',
+    opacity: 0.9,
   },
 });

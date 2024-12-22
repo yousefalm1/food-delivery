@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 6,
+    fontFamily: 'Poppins-Bold',
     color: '#1e1a18',
   },
   ratingContainer: {

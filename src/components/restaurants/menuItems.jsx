@@ -5,10 +5,10 @@ import RestaurantCardBox from './restaurantCardBox';
 const MenuItems = ({ menuItems, restaurant, category }) => {
   return (
     <>
-      {menuItems.map((item) => (
+      {menuItems.map((item, index) => (
         <RestaurantCardBox
           item={item}
-          key={item.id}
+          key={index}
           restaurant={restaurant}
           category={category}
         />
